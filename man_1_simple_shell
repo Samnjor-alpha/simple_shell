@@ -1,81 +1,91 @@
-.TH man "SIMPLE_SHELL"
-.SH NAME
-.B simple_shell
-- a simple UNIX command interpreter
-.SH SYNOPSIS
-.sp
-.B int hsh(void)
-.SH DESCRIPTION
-.B Overview
-.sp
-The simple shell is an application that reads lines from either a file or the
-terminal, interprets them, and executes them. Users can interactively type directly
-to the
-running shell or pipe in shell scripts.
-.sp
-.B Invocation
-.sp
-If no args are present and if the standard input of the shell is connected to a
-terminal, the shell is considered an interactive shell.  An interactive shell prompts
-before each command and handles programming and command errors differently.
-.sp
-.B Builtins
-.sp
-This section lists the builtin commands which are builtin because they need to perform
-some operation that can't be performed by a separate process.
-.sp
-.IP "-exit [status]"
-.sp
-Terminate the shell process. If status is given, it is used as the exit status of
-the shell; otherwise the exit status of the preceding command is used.
-.sp
-.IP "-help [builtin]"
-.sp
-Retrieve informational text on how use builtin
-.sp
-.IP "-unsetenv [variable]"
-.sp
-Unsets an environmental varibale of name [variable]
-.sp
-.IP "-setenv [key] [value]"
-.sp
-Set a local environmental variable with key-value pair. If key already exists, this
-action will replace the existing key with new value.
-.sp
-.IP "-cd [directory]"
-.sp
-Change working current directory to target directory. If "-" is inputted as second
-argument, it will change to last working directory. If ".." is inputted, it will
-take user to parent directory. If input is omitted, then user is take to $HOME.
-.sp
-.IP "-alias"
-.sp
-Work in progress in current version.
-.sp
-.IP "-history"
-.sp
-Work in progress in current version.
-.sp
-.SH EXIT STATUS
-.sp
-Errors that are detected by the shell, such as a syntax error, will cause the shell to
-exit with a non-zero exit status. Otherwise the shell will return the exit status of
-the last command executed, or if the exit builtin is used with a numeric argument,
-it will return the argument.
-.sp
-.SH ENVIRONMENT
-.sp
-.IP HOME
-User's login directory
-.sp
-.IP PATH
-The default search path for executables
-.sp
-.IP PS1
-The primary prompt string, which defaults to “$ ”
-.SH FILES
-.SH HISTORY
-.SH BUGS
-.ip Expansions only work once per stdin read
-.SH AUTHOR
-Ademola Glory and Emmanuel Murairi
+.Dd
+.TH "SIMPLE_SHELL" "1" "26 November, 2019" "1.0" "Simple Shell Programmer's Manual"
+.Os 1.0
+.Sh NAME                 \" Section Header - required - don't modify
+.Nm simple_shell,
+.\" The following lines are read in generating the apropos(man -k) database. Use only key
+.\" words here as the database is built based on the words here and in the .ND line.
+.Nm hsh,
+.Nm dash
+.\" Use .Nm macro to designate other names for the documented program.
+.Nd command line interpreter
+.Sh SYNOPSIS             \" Section Header - required - don't modify
+.Nm
+.Op abcd              \" [-abcd]
+.Op Fl a Ar path         \" [-a path]
+.Op Ar file              \" [file]
+.Op Ar                   \" [file ...]
+.Ar arg0                 \" Underlined argument - use .Ar anywhere to underline
+arg2 ...                 \" Arguments
+.Sh DESCRIPTION          \" Section Header - required - don't modify
+This program execute like a replic of a dash(sh command line interpreter).
+Display a prompt and wait for the user to type a command, the prompt will be displayed
+again each time a commans has been executed, the command lines are made by one or more words
+that will be passed to the program like arguments. If an executable cannot be found, display
+an error message and display the prompt again.
+.Nm
+Underlining is accomplished with the .Ar macro like this:
+.Ar underlined text .
+.Pp                      \" Inserts a space
+A list of items with descriptions:
+.Bl -tag -width -indent  \" Begins a tagged list
+
+.It ls
+This command will show a list of all files present in the current directory(depends of flags)
+
+.It mkdir
+this command will make a new directory in the current directory(depends of flags)
+
+.It cp
+this command will copy a file into another directory
+
+.It rm
+this command will remove a file or directory in the current directory(depends of flags)
+
+.It mv
+this command will move a file or directory in the current directory(depends of flags)
+
+.It pwd
+this command will display the current path
+
+.El                      \" Ends the list
+.Pp
+A list of flags and their descriptions:
+
+.Bl -tag -width -indent  \" Differs from above in tag removed
+.It ls -la                 \"-a flag as a list item
+Display a detail list with a long format of each file and directory and hidden files and directories
+
+.It mkdir -rf
+Force to create a directory and replaced it if exist
+.El                      \" Ends the list
+.Pp
+.Sh EXAMPLE
+
+        You can compile all files to generate your own executable:
+        In your shell: Type the name of executable(e.g. ./hsh)
+
+            miguel@ubuntu:~/shell$ ./hsh
+            #cisfun$ "You can start to type something to evaluate"
+            #cisfun$ ls
+            holamundo.js  index.html styles.css
+            #cisfun$
+.Sh RETURN VALUE
+
+If command exists and arguments is OK, this is execute and display correct output in the ba\
+sh, or show error message if not found the file or directory of command or arguments
+
+.Sh EXIT
+
+You can use Ctrl+D or writing exit in the shell to finish the program
+
+.Sh AUTHORS
+Angel Pedroza Cardenas [AngelPedroza] <https://github.com/AngelPedroza>
+Miguel Parada [Michael-Auditore] <https://github.com/MichaelAuditore>
+
+.Sh SEE ALSO
+.Xr sh 2 ,
+.Xr closedir 3 ,
+.Xr execve 4 ,
+.Xr exit 3 ,
+.Xr fork 1
