@@ -1,1 +1,7 @@
-#Gates of shell
+# simple_shell
+
+# GATESOFSHELL
+
+## Description
+ALX SHELL PROJECT
+
